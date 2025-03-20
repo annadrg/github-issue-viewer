@@ -21,7 +21,9 @@ type Props = {
 export default function RootLayout({ children }: Props) {
   return (
     <html lang="en">
-      <body className={`${monaSans.variable} antialiased`}>{children}</body>
+      <body className={`${monaSans.variable} font-sans antialiased`}>
+        {children}
+      </body>
     </html>
   );
 }
