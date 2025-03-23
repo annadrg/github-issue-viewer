@@ -1,4 +1,5 @@
 import SearchInput from "@/components/search-input";
+import SearchResults from "@/components/search-results";
 
 export default function Home() {
   return (
@@ -7,6 +8,7 @@ export default function Home() {
         GitHub Repository Issues Viewer
       </h1>
       <SearchInput />
+      <SearchResults />
     </main>
   );
 }
