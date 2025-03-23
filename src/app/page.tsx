@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Image from "next/image";
 
 import SearchInput from "@/components/search-input";
@@ -16,8 +17,10 @@ export default function Home() {
         />
         GitHub Issue Viewer
       </h1>
-      <SearchInput />
-      <SearchResults />
+      <Suspense>
+        <SearchInput />
+        <SearchResults />
+      </Suspense>
     </main>
   );
 }
