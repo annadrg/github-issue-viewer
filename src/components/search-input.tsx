@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -72,7 +73,10 @@ export default function SearchInput() {
             )}
           />
         </div>
-        <Button type="submit">View issues</Button>
+        <Button type="submit" className="w-full">
+          <Eye />
+          View issues
+        </Button>
       </form>
     </Form>
   );

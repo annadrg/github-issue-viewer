@@ -4,7 +4,7 @@ import { Mona_Sans } from "next/font/google";
 
 import { Providers } from "@/components/providers";
 
-import "./globals.css";
+import "../globals.css";
 
 const monaSans = Mona_Sans({
   variable: "--font-mona-sans",
