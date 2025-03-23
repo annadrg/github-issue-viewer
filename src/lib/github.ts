@@ -1,5 +1,3 @@
-"use server";
-
 type GitHubIssue = {
   id: number;
   node_id: string;
