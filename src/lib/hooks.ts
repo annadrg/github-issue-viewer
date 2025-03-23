@@ -19,7 +19,14 @@ export function useInfiniteRepositoryIssues() {
           nextPage: null,
         };
       }
-      return fetchRepositoryIssues(owner, repo, pageParam);
+
+      const result = await fetchRepositoryIssues(owner, repo, pageParam);
+
+      if (result.error) {
+        throw new Error(result.message);
+      }
+
+      return result;
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage,

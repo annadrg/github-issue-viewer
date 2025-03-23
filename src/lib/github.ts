@@ -1,3 +1,5 @@
+"use server";
+
 type GitHubIssue = {
   id: number;
   node_id: string;
@@ -36,29 +38,36 @@ export async function fetchRepositoryIssues(
 ) {
   const url = `https://api.github.com/repos/${owner}/${repo}/issues?page=${page}&per_page=10&state=all&sort=created&direction=desc`;
 
-  const response = await fetch(url, {
-    headers: {
-      Accept: "application/vnd.github+json",
-      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-    },
-  });
+  try {
+    const response = await fetch(url, {
+      headers: {
+        Accept: "application/vnd.github+json",
+        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+      },
+    });
 
-  if (!response.ok) {
-    if (response.status === 404) {
-      throw new Error("Not found");
+    if (!response.ok) {
+      return {
+        error: true,
+        message: response.status === 404 ? "Not found" : "Something went wrong",
+      };
     }
-    throw new Error("Something went wrong");
+
+    // Link header is structured as <https://api.github.com/repositories/123/issues?page=2>; rel="next", <https://api.github.com/repositories/123/issues?page=200>; rel="last"
+    const hasNextPage = !!response.headers
+      .get("Link")
+      ?.split(",")
+      .find((part) => part.includes('rel="next"'));
+    const issues = (await response.json()) as GitHubIssue[];
+
+    return {
+      issues,
+      nextPage: hasNextPage ? page + 1 : null,
+    };
+  } catch {
+    return {
+      error: true,
+      message: "Something went wrong",
+    };
   }
-
-  // Link header is structured as <https://api.github.com/repositories/123/issues?page=2>; rel="next", <https://api.github.com/repositories/123/issues?page=200>; rel="last"
-  const hasNextPage = !!response.headers
-    .get("Link")
-    ?.split(",")
-    .find((part) => part.includes('rel="next"'));
-  const issues = (await response.json()) as GitHubIssue[];
-
-  return {
-    issues,
-    nextPage: hasNextPage ? page + 1 : null,
-  };
 }

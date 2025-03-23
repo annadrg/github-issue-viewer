@@ -8,7 +8,7 @@ import { Skeleton } from "./ui/skeleton";
 
 export default function SearchResults() {
   const { data, isLoading, error } = useInfiniteRepositoryIssues();
-  const issues = data?.pages.flatMap((page) => page.issues) || [];
+  const issues = data?.pages.flatMap((page) => page.issues ?? []) || [];
 
   return (
     <div className="mt-8 flex flex-col gap-2">
