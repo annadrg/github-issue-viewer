@@ -1,6 +1,6 @@
 # GitHub Issue Viewer
 
-Use this app to fetch issues from a specific GitHub repository and infinitely scroll through them. You can check out the GitHub Issue Viewer [here](<(https://github-issue-viewer-pi.vercel.app/)>).
+Use this app to fetch issues from a specific GitHub repository and infinitely scroll through them. You can check out the GitHub Issue Viewer [here](https://github-issue-viewer-pi.vercel.app/).
 
 ## Get started
 
