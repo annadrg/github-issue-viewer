@@ -7,11 +7,11 @@ import { Card, CardContent, CardHeader } from "./ui/card";
 import { Skeleton } from "./ui/skeleton";
 
 export default function SearchResults() {
-  const { data, isLoading } = useInfiniteRepositoryIssues();
+  const { data, isLoading, error } = useInfiniteRepositoryIssues();
   const issues = data?.pages.flatMap((page) => page.issues) || [];
 
   return (
-    <div className="mt-10 flex flex-col gap-2">
+    <div className="mt-8 flex flex-col gap-2">
       {isLoading && (
         <div className="space-y-4">
           {[...Array(10).keys()].map((i) => (
@@ -25,6 +25,13 @@ export default function SearchResults() {
               </CardContent>
             </Card>
           ))}
+        </div>
+      )}
+      {error && (
+        <div className="text-muted-foreground border-t-muted-background flex justify-center border-t-1 pt-8">
+          {error.message === "Not found"
+            ? "The repository could not be found. Please fill in a different owner and/or name."
+            : "Oops, something went wrong. Please try again."}
         </div>
       )}
       {issues.map((issue) => (
