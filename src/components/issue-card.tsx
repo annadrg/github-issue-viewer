@@ -44,16 +44,16 @@ export default function IssueCard({
   comments,
 }: Props) {
   const StateIcon = state === "open" ? PackageOpen : Package;
+  const TypeIcon = pullRequest ? GitPullRequestIcon : CircleDot;
   return (
     <Card>
       <CardHeader className="pb-2">
-        <div className="flex flex-col items-start gap-2 sm:flex-row">
-          {pullRequest ? (
-            <GitPullRequestIcon className="text-primary mt-1 h-5 w-5 flex-shrink-0" />
-          ) : (
-            <CircleDot className="text-success mt-1 h-5 w-5 flex-shrink-0" />
-          )}
-          <div className="flex-1">
+        <div className="flex-1">
+          <div className="flex flex-col items-start gap-2 sm:flex-row">
+            <TypeIcon className="mt-1 h-5 w-5 flex-shrink-0" />
+            <span className="sr-only">
+              {pullRequest ? "Pull request" : "Issue"}
+            </span>
             <CardTitle className="flex flex-wrap items-center gap-x-2 gap-y-1 text-lg">
               <a
                 href={url}
@@ -71,18 +71,18 @@ export default function IssueCard({
                 />
               ))}
             </CardTitle>
-            <CardDescription className="mt-2">
-              #{number} opened by{" "}
-              <a
-                href={author.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-medium hover:underline"
-              >
-                {author.login}
-              </a>
-            </CardDescription>
           </div>
+          <CardDescription className="mt-2">
+            #{number} opened by{" "}
+            <a
+              href={author.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium hover:underline"
+            >
+              {author.login}
+            </a>
+          </CardDescription>
         </div>
       </CardHeader>
       <CardFooter className="space-y-3">
